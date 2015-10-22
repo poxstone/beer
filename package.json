@@ -4,7 +4,9 @@
   "description": "beer locker",
   "main": "server.js",
   "scripts": {
-    "test": "npm start"
+    "start": "node server.js",
+    "start2": "nodemon server.js",
+    "test": "node-debug server.js"
   },
   "repository": {
     "type": "git",

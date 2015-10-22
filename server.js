@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Use environment defined port or 3000
-var port = process.env.PORT || 443;
+var port = process.env.PORT || 3000;
 
 
 
