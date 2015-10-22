@@ -1,0 +1,28 @@
+{
+  "name": "beer",
+  "version": "1.0.0",
+  "description": "beer locker",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poxstone/beer.git"
+  },
+  "keywords": [
+    "beer",
+    "poxstone"
+  ],
+  "author": "poxstone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poxstone/beer/issues"
+  },
+  "homepage": "http://beer-poxstone.c9.io/",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.12"
+  }
+}
