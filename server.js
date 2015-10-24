@@ -19,11 +19,6 @@ app.use(bodyParser.urlencoded({
 // Create our Express router
 var router = express.Router();
 
-// Create endpoint handlers for /users
-router.route('/users')
-  .post(userController.postUsers)
-  .get(userController.getUsers);
-
 // Create endpoint handlers for /beers
 router.route('/beers')
   .post(beerController.postBeers)
@@ -35,8 +30,13 @@ router.route('/beers/:beer_id')
   .put(beerController.putBeer)
   .delete(beerController.deleteBeer);
 
+// Create endpoint handlers for /users
+router.route('/users')
+  .post(userController.postUsers)
+  .get(userController.getUsers);
+
 // Register all our routes with /api
 app.use('/api', router);
 
 // Start the server
-app.listen(8080);
+app.listen(80);

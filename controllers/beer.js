@@ -7,17 +7,25 @@ exports.postBeers = function(req, res) {
   var beer = new Beer();
 
   // Set the beer properties that came from the POST data
-  beer.name = req.body.name;
-  beer.type = req.body.type;
-  beer.quantity = req.body.quantity;
+  beer.name = req.body.name || null;
+  beer.type = req.body.type || null;
+  beer.quantity = req.body.quantity || null;
 
-  // Save the beer and check for errors
-  beer.save(function(err) {
-    if (err)
-      res.send(err);
+  if( beer.name && beer.type && beer.quantity ) {
+    // Save the beer and check for errors
+    beer.save(function(err) {
+      if (err)
+        res.send(err);
 
-    res.json({ message: 'Beer added to the locker!', data: beer });
-  });
+      res.json({ message: 'Beer added to the locker!', data: beer });
+    });
+
+  }else{
+    res.json({ message: 'you don\'t complete all inputs' });
+  }
+
+
+
 };
 
 // Create endpoint /api/beers for GET
