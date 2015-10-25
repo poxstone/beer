@@ -24,8 +24,6 @@ exports.postBeers = function(req, res) {
     res.json({ message: 'you don\'t complete all inputs' });
   }
 
-
-
 };
 
 // Create endpoint /api/beers for GET
@@ -43,10 +41,14 @@ exports.getBeers = function(req, res) {
 exports.getBeer = function(req, res) {
   // Use the Beer model to find a specific beer
   Beer.findById(req.params.beer_id, function(err, beer) {
-    if (err)
+    if (err){
       res.send(err);
 
-    res.json(beer);
+    }else{
+      res.json(beer);
+
+    }
+
   });
 };
 
@@ -54,29 +56,43 @@ exports.getBeer = function(req, res) {
 exports.putBeer = function(req, res) {
   // Use the Beer model to find a specific beer
   Beer.findById(req.params.beer_id, function(err, beer) {
-    if (err)
+    if (err){
       res.send(err);
 
-    // Update the existing beer quantity
-    beer.quantity = req.body.quantity;
+    }else{
+      // Update the existing beer quantity
+      beer.quantity = req.body.quantity || null;
+      beer.type = req.body.type || null;
+      if( beer.quantity && beer.type ){
+        beer.save(function(err) {
+          if (err)
+            res.send(err);
 
-    // Save the beer and check for errors
-    beer.save(function(err) {
-      if (err)
-        res.send(err);
+          res.json(beer);
+        });
 
-      res.json(beer);
-    });
+      }else{
+        res.json({ message: 'you don\'t complete all inputs' });
+      }
+
+      // Save the beer and check for errors
+    }
   });
 };
 
 // Create endpoint /api/beers/:beer_id for DELETE
 exports.deleteBeer = function(req, res) {
   // Use the Beer model to find a specific beer and remove it
-  Beer.findByIdAndRemove(req.params.beer_id, function(err) {
-    if (err)
+  Beer.findById(req.params.beer_id, function(err){
+    if (err){
       res.send(err);
+    }else{
+      Beer.findByIdAndRemove(req.params.beer_id, function(err) {
+        if (err)
+          res.send(err);
 
-    res.json({ message: 'Beer removed from the locker!' });
+        res.json({ message: 'Beer removed from the locker!' });
+      });
+    }
   });
 };

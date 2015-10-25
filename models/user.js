@@ -21,29 +21,33 @@ UserSchema.pre('save', function(callback) {
 
   // Break out if the password hasn't changed
   if (!user.isModified('password')){
+    console.log('el usuario no modifica password');
     return callback();
-    console.log('sejo-1');
-    
+  }else{
+    // Password changed so we need to hash it
+    bcrypt.genSalt(5, function(err, salt) {
+      if (err){
+        console.log('sejo-2: bcrypt erro');
+        return callback(err);
+      }else{
+        console.log('salt:::: '+salt);
+
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+          if (err){
+            console.log('sejo-3: hash');
+            return callback(err);
+          }
+          console.log('hash:::: '+hash);
+          user.password = hash;
+          callback();
+
+        });
+      }
+
+    });
+
   }
 
-  // Password changed so we need to hash it
-  bcrypt.genSalt(5, function(err, salt) {
-    if (err) return callback(err);
-    
-    console.log('salt:::: '+salt);
-
-    bcrypt.hash(user.password, salt, null, function(err, hash) {
-      if (err){
-        console.log('sejo-2');
-        return callback(err);
-      }
-      
-      console.log('hash:::: '+hash);
-      user.password = hash;
-      callback();
-    });
-    
-  });
 });
 
 // Export the Mongoose model
