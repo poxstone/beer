@@ -15,6 +15,13 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
+UserSchema.methods.verifyPassword = function(password, cb) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
 // Execute before each user.save() call
 UserSchema.pre('save', function(callback) {
   var user = this;
